@@ -21,6 +21,12 @@ namespace Language_2ISP11_17_DanArt_ArtZey
     /// </summary>
     public partial class MainWindow : Window
     {
+        //переменные для постраничной навигации 
+
+        int numberPage = 0; //номер текущей страницы
+        int countItem = 0; //кол-во записей на стрн
+        int countPage = 0; //кол-во страниц
+
         public MainWindow()
         {
             InitializeComponent();
@@ -42,16 +48,15 @@ namespace Language_2ISP11_17_DanArt_ArtZey
                 "По количеству посещений (От большего к меньшему)"
             };
 
-            cmbCountOnPage.SelectedIndex = 3;
+            cmbCountOnPage.SelectedIndex = 0;
             cmbCountOnPage.ItemsSource = new List<String>
             {
+                "Все",
                 "10",
                 "50",
-                "200",
-                "Все"
+                "200"
             };
-
-
+            
 
             Filter();
         }
@@ -105,23 +110,42 @@ namespace Language_2ISP11_17_DanArt_ArtZey
                 list = list.Where(i => i.Birthday.Month == DateTime.Now.Month).ToList();    
             }
 
-            //Фильтрация по кол-ву записей
+            //Постраничный вывод
+            //Получаем количество странич
             switch (cmbCountOnPage.SelectedIndex)
             {
+                case 0:
+                    countItem = list.Count;
+                    break;
                 case 1:
-                    list = list.OrderBy(i => 10).ToList();
+                    countItem = 10;
                     break;
                 case 2:
-                    list = list.OrderBy(i => 50).ToList();
+                    countItem = 50;
                     break;
                 case 3:
-                    list = list.OrderBy(i => 200).ToList();
+                    countItem = 200;
                     break;
                 default:
-                    list = list.OrderBy(i => 999).ToList();
+                    countItem = list.Count;
                     break;
             }
-          listReader.ItemsSource = list;
+            if (list.Count/ countItem == 0|| list.Count / countItem == 1)
+            {
+                countPage = (list.Count / countItem);
+            }
+            else
+            {
+                countPage = (list.Count / countItem) + 1;
+            }
+
+            TBAllCountList.Text = list.Count.ToString();
+
+            list = list.Skip(numberPage * countItem).Take(countItem).ToList();
+
+            TBCountList.Text = list.Count.ToString();
+
+            listReader.ItemsSource = list;
         }
         private void CmbSortGender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -154,11 +178,12 @@ namespace Language_2ISP11_17_DanArt_ArtZey
             txtSearch.Text = "";
             cmbSort.SelectedIndex = 0;
             cmbSortGender.SelectedIndex = 0;
-            cmbCountOnPage.SelectedIndex = 3;
+            cmbCountOnPage.SelectedIndex = 0;
         }
 
         private void CountOnPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            numberPage = 0;
             Filter();
         }
 
@@ -183,11 +208,27 @@ namespace Language_2ISP11_17_DanArt_ArtZey
                     }
                 }
             }
-
             else
             {
                 MessageBox.Show("Выберите клиента", "Удаление клиента", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+        private void BtnNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (numberPage + 1 < countPage)
+            {
+                numberPage++;
+            }
+          Filter();
+        }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (numberPage > 0)
+            {
+                numberPage--;
+            }
+          Filter();
         }
     }
 }

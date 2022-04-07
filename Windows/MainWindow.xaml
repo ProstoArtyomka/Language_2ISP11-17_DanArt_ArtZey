@@ -3,14 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Language_2ISP11_17_DanArt_ArtZey"
         mc:Ignorable="d"
         Title="ClientList"
         Height="650"
-        Width="800"
+        Width="1250"
         WindowStartupLocation="CenterScreen"
         MinHeight="650"
-        MinWidth="800"
+        MinWidth="1250"
         >
     <Grid>
      
@@ -44,7 +43,10 @@
                 ></CheckBox>
         </StackPanel>
         <StackPanel Grid.Row="1"
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+                    >
             <TextBlock Text="Фильтрация по полу"
                        FontFamily="Comic Sans MS"
                        FontSize="14"
@@ -194,15 +196,18 @@
                 ></ComboBox>
 
             <Button
+                x:Name="btnBack"
                 Content="Предыдущая"
                 Height="40"
                 Width="120"
                 Margin="10,0"
                 Background="#FFE7FABF"
-                 FontFamily="Comic Sans MS"
+                FontFamily="Comic Sans MS"
+                Click="BtnBack_Click"
                 ></Button>
 
             <TextBlock
+                x:Name="TBCountList"
                  Text="100"
                        FontFamily="Comic Sans MS"
                        FontSize="14"
@@ -219,6 +224,7 @@
                 ></TextBlock>
 
             <TextBlock
+                x:Name="TBAllCountList"
                  Text="100"
                        FontFamily="Comic Sans MS"
                        FontSize="14"
@@ -227,12 +233,13 @@
                 ></TextBlock>
 
             <Button
+                x:Name="btnNext"
                 Content="Следующая"
                 Height="40"
                 Width="120"
                 Margin="10,0"
                 Background="#FFE7FABF"
-                 FontFamily="Comic Sans MS"
+                 FontFamily="Comic Sans MS" Click="BtnNext_Click"
                 ></Button>
 
 
