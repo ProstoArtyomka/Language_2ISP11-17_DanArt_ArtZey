@@ -86,7 +86,7 @@
             <ComboBox
                 x:Name="cmbSort"
                 Height="40"
-                Width="60"
+                Width="190"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
                 Margin="10, 0"
